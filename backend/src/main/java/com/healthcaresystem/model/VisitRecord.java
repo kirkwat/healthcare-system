@@ -1,4 +1,4 @@
-package healthcaresystem.model;
+package com.healthcaresystem.model;
 
 public class VisitRecord {
     private int visitID;

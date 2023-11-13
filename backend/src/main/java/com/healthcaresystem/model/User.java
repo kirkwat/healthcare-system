@@ -1,4 +1,4 @@
-package healthcaresystem.model;
+package com.healthcaresystem.model;
 
 public class User {
     private int uid;
@@ -7,8 +7,7 @@ public class User {
 
     /**
      * @param uid
-     * @param username
-     * @param password
+     * @param name
      * @param type
      */
     public User(int uid, String name, String type) {

@@ -1,6 +1,7 @@
-package healthcaresystem.service;
+package com.healthcaresystem.service;
 
-import healthcaresystem.model.*;
+import com.healthcaresystem.model.*;
+
 import java.util.ArrayList;
 
 public interface IClinic {

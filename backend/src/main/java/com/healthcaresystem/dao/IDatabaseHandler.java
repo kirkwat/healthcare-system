@@ -1,9 +1,11 @@
-package healthcaresystem.dao;
+package com.healthcaresystem.dao;
 
-import healthcaresystem.model.*;
+import com.healthcaresystem.model.*;
+
 import java.util.ArrayList;
 
 public interface IDatabaseHandler {
+
     public void closeConnection();
 
     public User login(String username, String password);

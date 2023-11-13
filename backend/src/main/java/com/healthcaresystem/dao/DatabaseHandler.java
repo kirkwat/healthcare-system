@@ -1,14 +1,10 @@
-package healthcaresystem.dao;
+package com.healthcaresystem.dao;
 
-import healthcaresystem.model.*;
+import com.healthcaresystem.model.*;
+
 import java.sql.*;
 import java.util.ArrayList;
 
-/**
- * This class is responsible for the communication with the MySQL database.
- * @author Kirk
- * Created on Oct 29, 2023
- */
 public class DatabaseHandler implements IDatabaseHandler {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/HealthCareSystem";
     private static final String USER = "root";
@@ -17,7 +13,11 @@ public class DatabaseHandler implements IDatabaseHandler {
 
     public DatabaseHandler() {
         try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
+        } catch (ClassNotFoundException e) {
+            System.out.println("MySQL JDBC Driver not found");
+            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -63,7 +63,7 @@ public class DatabaseHandler implements IDatabaseHandler {
     public LabTest getLabTestByID(int patientID, int testID){
         LabTest labTest = null;
 
-        StringBuilder query = new StringBuilder("SELECT * FROM LabTest WHERE patient_id = ? AND test_id = ?");
+        StringBuilder query = new StringBuilder("SELECT * FROM LabTest WHERE patient_id = ? AND test_id = ? LIMIT 1");
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(query.toString());
@@ -137,7 +137,8 @@ public class DatabaseHandler implements IDatabaseHandler {
                 "FROM VisitRecord v " +
                 "INNER JOIN Patient p On v.patient_id = p.patient_id " +
                 "INNER JOIN User u ON v.physician_id = u.uid " +
-                "WHERE v.patient_id = ? AND v.visit_id = ?");
+                "WHERE v.patient_id = ? AND v.visit_id = ?" +
+                "LIMIT 1");
         try {
             PreparedStatement pstmt = conn.prepareStatement(query.toString());
             pstmt.setInt(1,  patientID);
