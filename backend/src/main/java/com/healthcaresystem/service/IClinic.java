@@ -9,12 +9,12 @@ public interface IClinic {
     //public int MFA(int code);
     //public void Logout();
 
-    public LabTest getLabTestByID(int patientID, int testID);
-    public ArrayList<LabTest> getLabTestsForPatient(int patientID, String testType, String date);
+    public LabTest getLabTestById(int patientId, int testId);
+    public ArrayList<LabTest> getLabTestsForPatient(int patientId, String testType, String date);
 
-    public VisitRecord getVisitRecordByID(int patientID, int visitID);
-    public ArrayList<VisitRecord> getVisitRecordsForPatient(int patientID);
+    public VisitRecord getVisitRecordById(int patientId, int visitId);
+    public ArrayList<VisitRecord> getVisitRecordsForPatient(int patientId);
 
-    public ArrayList<Physician> getPhysiciansForPatient(int patientID);
-    public ArrayList<Patient> getPatientsForPhysician(int physicianID);
+    public ArrayList<Physician> getPhysiciansForPatient(int patientId);
+    public ArrayList<Patient> getPatientsForPhysician(int physicianId);
 }

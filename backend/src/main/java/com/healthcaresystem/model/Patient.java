@@ -1,23 +1,23 @@
 package com.healthcaresystem.model;
 
 public class Patient {
-    private int patientID;
+    private int patientId;
     private String name;
 
     /**
-     * @param patientID
+     * @param patientId
      * @param name
      */
-    public Patient(int patientID, String name) {
-        this.patientID = patientID;
+    public Patient(int patientId, String name) {
+        this.patientId = patientId;
         this.name = name;
     }
 
     /**
-     * @return the patientID
+     * @return the patientId
      */
-    public int getPatientID() {
-        return patientID;
+    public int getPatientId() {
+        return patientId;
     }
 
     /**

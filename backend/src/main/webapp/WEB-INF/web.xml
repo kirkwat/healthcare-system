@@ -22,7 +22,7 @@
 
     <servlet-mapping>
         <servlet-name>ClinicServlet</servlet-name>
-        <url-pattern>/clinic</url-pattern>
+        <url-pattern>/clinic/*</url-pattern>
     </servlet-mapping>
 
 </web-app>

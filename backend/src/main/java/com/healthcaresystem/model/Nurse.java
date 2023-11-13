@@ -3,14 +3,14 @@ package com.healthcaresystem.model;
 import java.util.ArrayList;
 
 public class Nurse extends User {
-    private ArrayList<Integer> physicianIDs;
+    private ArrayList<Integer> physicianIds;
 
-    public Nurse(int uid, String name, String type, ArrayList<Integer> physicianIDs) {
+    public Nurse(int uid, String name, String type, ArrayList<Integer> physicianIds) {
         super(uid, name, type);
-        this.physicianIDs = physicianIDs;
+        this.physicianIds = physicianIds;
     }
 
-    public ArrayList<Integer> getPhysicianIDs(){
-        return physicianIDs;
+    public ArrayList<Integer> getPhysicianIds(){
+        return physicianIds;
     }
 }

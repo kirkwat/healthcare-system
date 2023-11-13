@@ -1,10 +1,10 @@
 package com.healthcaresystem.model;
 
 public class VisitRecord {
-    private int visitID;
-    private int patientID;
+    private int visitId;
+    private int patientId;
     private String patientName;
-    private int physicianID;
+    private int physicianId;
     private String physicianName;
     private String date;
     private String time;
@@ -12,22 +12,22 @@ public class VisitRecord {
     private String notes;
 
     /**
-     * @param visitID
-     * @param patientID
+     * @param visitId
+     * @param patientId
      * @param patientName
-     * @param physicianID
+     * @param physicianId
      * @param physicianName
      * @param date
      * @param time
      * @param location
      * @param notes
      */
-    public VisitRecord(int visitID, int patientID, String patientName, int physicianID, String physicianName,
+    public VisitRecord(int visitId, int patientId, String patientName, int physicianId, String physicianName,
                        String date, String time, String location, String notes) {
-        this.visitID = visitID;
-        this.patientID = patientID;
+        this.visitId = visitId;
+        this.patientId = patientId;
         this.patientName = patientName;
-        this.physicianID = physicianID;
+        this.physicianId = physicianId;
         this.physicianName = physicianName;
         this.date = date;
         this.time = time;
@@ -36,17 +36,17 @@ public class VisitRecord {
     }
 
     /**
-     * @return the visitID
+     * @return the visitId
      */
-    public int getVisitID() {
-        return visitID;
+    public int getVisitId() {
+        return visitId;
     }
 
     /**
-     * @return the patientID
+     * @return the patientId
      */
-    public int getPatientID() {
-        return patientID;
+    public int getPatientId() {
+        return patientId;
     }
 
     /**
@@ -57,10 +57,10 @@ public class VisitRecord {
     }
 
     /**
-     * @return the physicianID
+     * @return the physicianId
      */
-    public int getPhysicianID() {
-        return physicianID;
+    public int getPhysicianId() {
+        return physicianId;
     }
 
     /**

@@ -18,29 +18,28 @@ public class Clinic implements IClinic {
         return dbHandler.login(username, password);
     }
 
-    public LabTest getLabTestByID(int patientID, int testID) {
-        return dbHandler.getLabTestByID(patientID, testID);
+    public LabTest getLabTestById(int patientId, int testId) {
+        return dbHandler.getLabTestById(patientId, testId);
     }
 
-    public ArrayList<LabTest> getLabTestsForPatient(int patientID, String testType, String date){
-        return dbHandler.getLabTestsForPatient(patientID, testType, date);
+    public ArrayList<LabTest> getLabTestsForPatient(int patientId, String testType, String date){
+        return dbHandler.getLabTestsForPatient(patientId, testType, date);
     }
 
-    public VisitRecord getVisitRecordByID(int patientID, int visitID) {
-        return dbHandler.getVisitRecordByID(patientID, visitID);
+    public VisitRecord getVisitRecordById(int patientId, int visitId) {
+        return dbHandler.getVisitRecordById(patientId, visitId);
 
     }
-    public ArrayList<VisitRecord> getVisitRecordsForPatient(int patientID){
-        return dbHandler.getVisitRecordsForPatient(patientID);
+    public ArrayList<VisitRecord> getVisitRecordsForPatient(int patientId){
+        return dbHandler.getVisitRecordsForPatient(patientId);
 
     }
 
-    public ArrayList<Physician> getPhysiciansForPatient(int patientID){
-        return dbHandler.getPhysiciansForPatient(patientID);
+    public ArrayList<Physician> getPhysiciansForPatient(int patientId){
+        return dbHandler.getPhysiciansForPatient(patientId);
     }
 
-    public ArrayList<Patient> getPatientsForPhysician(int physicianID){
-        return dbHandler.getPatientsForPhysician(physicianID);
+    public ArrayList<Patient> getPatientsForPhysician(int physicianId){
+        return dbHandler.getPatientsForPhysician(physicianId);
     }
-
 }

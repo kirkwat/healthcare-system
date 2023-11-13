@@ -60,25 +60,25 @@ public class DatabaseHandler implements IDatabaseHandler {
         return user;
     }
 
-    public LabTest getLabTestByID(int patientID, int testID){
+    public LabTest getLabTestById(int patientId, int testId){
         LabTest labTest = null;
 
         StringBuilder query = new StringBuilder("SELECT * FROM LabTest WHERE patient_id = ? AND test_id = ? LIMIT 1");
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(query.toString());
-            pstmt.setInt(1,  patientID);
-            pstmt.setInt(2, testID);
+            pstmt.setInt(1,  patientId);
+            pstmt.setInt(2, testId);
 
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                int rsTestID = rs.getInt("test_id");
-                int rsPatientID = rs.getInt("patient_id");
+                int rsTestId = rs.getInt("test_id");
+                int rsPatientId = rs.getInt("patient_id");
                 String rsTestType = rs.getString("test_type");
                 String rsDate = rs.getString("date");
                 String rsResult = rs.getString("result");
-                labTest = new LabTest(rsTestID, rsPatientID, rsTestType, rsDate, rsResult);
+                labTest = new LabTest(rsTestId, rsPatientId, rsTestType, rsDate, rsResult);
             }
 
         } catch (SQLException e) {
@@ -88,7 +88,7 @@ public class DatabaseHandler implements IDatabaseHandler {
         return labTest;
     }
 
-    public ArrayList<LabTest> getLabTestsForPatient(int patientID, String testType, String date){
+    public ArrayList<LabTest> getLabTestsForPatient(int patientId, String testType, String date){
         ArrayList<LabTest> labTests = new ArrayList<>();
 
         StringBuilder query = new StringBuilder("SELECT * FROM LabTest WHERE patient_id = ?");
@@ -102,7 +102,7 @@ public class DatabaseHandler implements IDatabaseHandler {
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(query.toString());
-            pstmt.setInt(1,  patientID);
+            pstmt.setInt(1,  patientId);
 
             int index = 2;
             if(testType != null) {
@@ -115,12 +115,12 @@ public class DatabaseHandler implements IDatabaseHandler {
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                int rsTestID = rs.getInt("test_id");
-                int rsPatientID = rs.getInt("patient_id");
+                int rsTestId = rs.getInt("test_id");
+                int rsPatientId = rs.getInt("patient_id");
                 String rsTestType = rs.getString("test_type");
                 String rsDate = rs.getString("date");
                 String rsResult = rs.getString("result");
-                labTests.add(new LabTest(rsTestID, rsPatientID, rsTestType, rsDate, rsResult));
+                labTests.add(new LabTest(rsTestId, rsPatientId, rsTestType, rsDate, rsResult));
             }
 
         } catch (SQLException e) {
@@ -130,33 +130,33 @@ public class DatabaseHandler implements IDatabaseHandler {
         return labTests;
     }
 
-    public VisitRecord getVisitRecordByID(int patientID, int visitID){
+    public VisitRecord getVisitRecordById(int patientId, int visitId){
         VisitRecord visitRecord = null;
 
         StringBuilder query = new StringBuilder("SELECT v.*, p.name AS patient_name, u.name AS physician_name " +
                 "FROM VisitRecord v " +
                 "INNER JOIN Patient p On v.patient_id = p.patient_id " +
                 "INNER JOIN User u ON v.physician_id = u.uid " +
-                "WHERE v.patient_id = ? AND v.visit_id = ?" +
+                "WHERE v.patient_id = ? AND v.visit_id = ? " +
                 "LIMIT 1");
         try {
             PreparedStatement pstmt = conn.prepareStatement(query.toString());
-            pstmt.setInt(1,  patientID);
-            pstmt.setInt(2, visitID);
+            pstmt.setInt(1,  patientId);
+            pstmt.setInt(2, visitId);
 
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                int rsVisitID = rs.getInt("visit_id");
-                int rsPatientID = rs.getInt("patient_id");
+                int rsVisitId = rs.getInt("visit_id");
+                int rsPatientId = rs.getInt("patient_id");
                 String rsPatientName = rs.getString("patient_name");
-                int rsPhysicianID = rs.getInt("physician_id");
+                int rsPhysicianId = rs.getInt("physician_id");
                 String rsPhysicianName = rs.getString("physician_name");
                 String rsDate = rs.getString("date");
                 String rsTime = rs.getString("time");
                 String rsLocation = rs.getString("location");
                 String rsNotes = rs.getString("notes");
-                visitRecord = new VisitRecord(rsVisitID, rsPatientID, rsPatientName, rsPhysicianID, rsPhysicianName, rsDate, rsTime, rsLocation, rsNotes);
+                visitRecord = new VisitRecord(rsVisitId, rsPatientId, rsPatientName, rsPhysicianId, rsPhysicianName, rsDate, rsTime, rsLocation, rsNotes);
             }
 
         } catch (SQLException e) {
@@ -166,7 +166,7 @@ public class DatabaseHandler implements IDatabaseHandler {
         return visitRecord;
     }
 
-    public ArrayList<VisitRecord> getVisitRecordsForPatient(int patientID){
+    public ArrayList<VisitRecord> getVisitRecordsForPatient(int patientId){
         ArrayList<VisitRecord> visitRecords = new ArrayList<>();
 
         StringBuilder query = new StringBuilder("SELECT v.*, p.name AS patient_name, u.name AS physician_name " +
@@ -177,21 +177,21 @@ public class DatabaseHandler implements IDatabaseHandler {
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(query.toString());
-            pstmt.setInt(1,  patientID);
+            pstmt.setInt(1,  patientId);
 
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                int rsVisitID = rs.getInt("visit_id");
-                int rsPatientID = rs.getInt("patient_id");
+                int rsVisitId = rs.getInt("visit_id");
+                int rsPatientId = rs.getInt("patient_id");
                 String rsPatientName = rs.getString("patient_name");
-                int rsPhysicianID = rs.getInt("physician_id");
+                int rsPhysicianId = rs.getInt("physician_id");
                 String rsPhysicianName = rs.getString("physician_name");
                 String rsDate = rs.getString("date");
                 String rsTime = rs.getString("time");
                 String rsLocation = rs.getString("location");
                 String rsNotes = rs.getString("notes");
-                visitRecords.add(new VisitRecord(rsVisitID, rsPatientID, rsPatientName, rsPhysicianID, rsPhysicianName, rsDate, rsTime, rsLocation, rsNotes));
+                visitRecords.add(new VisitRecord(rsVisitId, rsPatientId, rsPatientName, rsPhysicianId, rsPhysicianName, rsDate, rsTime, rsLocation, rsNotes));
             }
 
         } catch (SQLException e) {
@@ -201,7 +201,7 @@ public class DatabaseHandler implements IDatabaseHandler {
         return visitRecords;
     }
 
-    public ArrayList<Physician> getPhysiciansForPatient(int patientID){
+    public ArrayList<Physician> getPhysiciansForPatient(int patientId){
         ArrayList<Physician> physicians = new ArrayList<>();
 
         StringBuilder query = new StringBuilder("SELECT u.uid, u.name, u.type " +
@@ -211,7 +211,7 @@ public class DatabaseHandler implements IDatabaseHandler {
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(query.toString());
-            pstmt.setInt(1,  patientID);
+            pstmt.setInt(1,  patientId);
 
             ResultSet rs = pstmt.executeQuery();
 
@@ -227,12 +227,12 @@ public class DatabaseHandler implements IDatabaseHandler {
 
                 ResultSet rs2 = pstmt2.executeQuery();
 
-                ArrayList<Integer> patientIDs = new ArrayList<>();
+                ArrayList<Integer> patientIds = new ArrayList<>();
                 while (rs2.next()) {
-                    patientIDs.add(rs2.getInt("patient_id"));
+                    patientIds.add(rs2.getInt("patient_id"));
                 }
 
-                physicians.add(new Physician(rsUid, rsName, rsType, patientIDs));
+                physicians.add(new Physician(rsUid, rsName, rsType, patientIds));
             }
 
         } catch (SQLException e) {
@@ -242,7 +242,7 @@ public class DatabaseHandler implements IDatabaseHandler {
         return physicians;
     }
 
-    public ArrayList<Patient> getPatientsForPhysician(int physicianID){
+    public ArrayList<Patient> getPatientsForPhysician(int physicianId){
         ArrayList<Patient> patients = new ArrayList<>();
 
         StringBuilder query = new StringBuilder("SELECT p.* " +
@@ -252,14 +252,14 @@ public class DatabaseHandler implements IDatabaseHandler {
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(query.toString());
-            pstmt.setInt(1,  physicianID);
+            pstmt.setInt(1,  physicianId);
 
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                int rsPatientID = rs.getInt("patient_id");
+                int rsPatientId = rs.getInt("patient_id");
                 String rsName = rs.getString("name");
-                patients.add(new Patient(rsPatientID, rsName));
+                patients.add(new Patient(rsPatientId, rsName));
             }
 
         } catch (SQLException e) {

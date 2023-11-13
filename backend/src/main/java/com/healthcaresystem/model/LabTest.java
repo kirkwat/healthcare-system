@@ -1,39 +1,39 @@
 package com.healthcaresystem.model;
 
 public class LabTest {
-    private int testID;
-    private int patientID;
+    private int testId;
+    private int patientId;
     private String testType;
     private String date;
     private String result;
 
     /**
-     * @param testID
-     * @param patientID
+     * @param testId
+     * @param patientId
      * @param testType
      * @param date
      * @param result
      */
-    public LabTest(int testID, int patientID, String testType, String date, String result) {
-        this.testID = testID;
-        this.patientID = patientID;
+    public LabTest(int testId, int patientId, String testType, String date, String result) {
+        this.testId = testId;
+        this.patientId = patientId;
         this.testType = testType;
         this.date = date;
         this.result = result;
     }
 
     /**
-     * @return the testID
+     * @return the testId
      */
-    public int getTestID() {
-        return testID;
+    public int getTestId() {
+        return testId;
     }
 
     /**
-     * @return the patientID
+     * @return the patientId
      */
-    public int getPatientID() {
-        return patientID;
+    public int getPatientId() {
+        return patientId;
     }
 
     /**
