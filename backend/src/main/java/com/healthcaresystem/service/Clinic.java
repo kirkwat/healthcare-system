@@ -5,17 +5,15 @@ import com.healthcaresystem.model.*;
 
 import java.util.ArrayList;
 
-/**
- * @author Kirk
- *
- * TO ADD: login, logout, track current user, restrict functions by current user type
- * create exception for invalid user type
- */
 public class Clinic implements IClinic {
     private DatabaseHandler dbHandler = new DatabaseHandler();
 
     public User login(String username, String password) {
         return dbHandler.login(username, password);
+    }
+
+    public User mfa(String username, int code){
+        return dbHandler.mfa(username, code);
     }
 
     public LabTest getLabTestById(String userType, int patientId, int testId) {

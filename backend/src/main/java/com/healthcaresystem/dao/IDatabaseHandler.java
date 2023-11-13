@@ -9,6 +9,8 @@ public interface IDatabaseHandler {
     public void closeConnection();
 
     public User login(String username, String password);
+    public User mfa(String username, int code);
+    
     public LabTest getLabTestById(int patientId, int testId);
     public ArrayList<LabTest> getLabTestsForPatient(int patientId, String testType, String date);
     public VisitRecord getVisitRecordById(int patientId, int visitId);

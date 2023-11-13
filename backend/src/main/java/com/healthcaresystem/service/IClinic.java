@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public interface IClinic {
     public User login(String username, String password);
-    //public int MFA(int code);
+    public User mfa(String username, int code);
 
     public LabTest getLabTestById(String userType, int patientId, int testId);
     public ArrayList<LabTest> getLabTestsForPatient(String userType, int patientId, String testType, String date);

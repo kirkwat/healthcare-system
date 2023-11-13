@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Nurse extends User {
     private ArrayList<Integer> physicianIds;
 
-    public Nurse(int uid, String name, String type, ArrayList<Integer> physicianIds) {
-        super(uid, name, type);
+    public Nurse(int uid, String username, String name, String type, ArrayList<Integer> physicianIds) {
+        super(uid, username, name, type);
         this.physicianIds = physicianIds;
     }
 

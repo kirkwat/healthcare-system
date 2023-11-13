@@ -27,6 +27,9 @@ public class AuthServlet extends HttpServlet {
             case "/login":
                 handleLogin(request, response);
                 break;
+            case "/mfa":
+                handleMFA(request, response);
+                break;
             case "/logout":
                 handleLogout(request, response);
                 break;
@@ -41,11 +44,23 @@ public class AuthServlet extends HttpServlet {
 
         User user = clinic.login(username, password);
         if (user != null) {
+            writeResponse(response, new UserLoginResponse(user.getUsername(), user.getName()));
+        } else {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().print(gson.toJson("Invalid username or password"));
+        }
+    }
+    private void handleMFA(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String username = request.getParameter("username");
+        int code = Integer.parseInt(request.getParameter("code"));
+
+        User user = clinic.mfa(username, code);
+        if (user != null) {
             request.getSession().setAttribute("user", user);
             writeResponse(response, user);
         } else {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().print(gson.toJson("Invalid username or password"));
+            response.getWriter().print(gson.toJson("Invalid MFA code"));
          }
     }
 
@@ -64,5 +79,15 @@ public class AuthServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.print(gson.toJson(object));
         out.flush();
+    }
+
+    private static class UserLoginResponse {
+        private final String username;
+        private final String name;
+
+        public UserLoginResponse(String username, String name) {
+            this.username = username;
+            this.name = name;
+        }
     }
 }

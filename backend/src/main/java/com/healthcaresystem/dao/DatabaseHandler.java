@@ -36,7 +36,7 @@ public class DatabaseHandler implements IDatabaseHandler {
     public User login(String username, String password) {
         User user = null;
 
-        StringBuilder query = new StringBuilder("SELECT * FROM User WHERE username = ? AND password = ?");
+        StringBuilder query = new StringBuilder("SELECT * FROM User WHERE username = ? AND password = ? LIMIT 1");
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(query.toString());
@@ -48,9 +48,38 @@ public class DatabaseHandler implements IDatabaseHandler {
 
             while (rs.next()) {
                 int rsUid = rs.getInt("uid");
+                String rsUserName = rs.getString("username");
                 String rsName = rs.getString("name");
                 String rsType = rs.getString("type");
-                user = new User(rsUid, rsName, rsType);
+                user = new User(rsUid, rsUserName, rsName, rsType);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
+    public User mfa(String username, int code){
+        User user = null;
+
+        StringBuilder query = new StringBuilder("SELECT * FROM User WHERE username = ? AND uid = ? LIMIT 1");
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query.toString());
+            pstmt.setString(1,  username);
+            pstmt.setInt(2, code);
+
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int rsUid = rs.getInt("uid");
+                String rsUserName = rs.getString("username");
+                String rsName = rs.getString("name");
+                String rsType = rs.getString("type");
+                user = new User(rsUid, rsUserName, rsName, rsType);
             }
 
         } catch (SQLException e) {
@@ -204,7 +233,7 @@ public class DatabaseHandler implements IDatabaseHandler {
     public ArrayList<Physician> getPhysiciansForPatient(int patientId){
         ArrayList<Physician> physicians = new ArrayList<>();
 
-        StringBuilder query = new StringBuilder("SELECT u.uid, u.name, u.type " +
+        StringBuilder query = new StringBuilder("SELECT u.uid, u.username, u.name, u.type " +
                 "FROM User u " +
                 "INNER JOIN PhysicianPatient pp ON u.uid = pp.physician_id " +
                 "WHERE pp.patient_id = ? AND u.type = 'physician'");
@@ -217,6 +246,7 @@ public class DatabaseHandler implements IDatabaseHandler {
 
             while (rs.next()) {
                 int rsUid = rs.getInt("uid");
+                String rsUserName = rs.getString("username");
                 String rsName = rs.getString("name");
                 String rsType = rs.getString("type");
 
@@ -232,7 +262,7 @@ public class DatabaseHandler implements IDatabaseHandler {
                     patientIds.add(rs2.getInt("patient_id"));
                 }
 
-                physicians.add(new Physician(rsUid, rsName, rsType, patientIds));
+                physicians.add(new Physician(rsUid, rsUserName, rsName, rsType, patientIds));
             }
 
         } catch (SQLException e) {
