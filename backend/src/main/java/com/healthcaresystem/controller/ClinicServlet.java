@@ -21,11 +21,12 @@ public class ClinicServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String pathInfo = request.getPathInfo();
-        if (pathInfo == null) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing action");
+        if (request.getSession(false) == null || request.getSession().getAttribute("user") == null) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "You must be logged in to access this resource.");
             return;
         }
+
+        String pathInfo = request.getPathInfo();
 
         switch (pathInfo) {
             case "/getLabTestById":
