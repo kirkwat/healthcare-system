@@ -5,12 +5,12 @@
          version="5.0">
 
     <servlet>
-        <servlet-name>helloServlet</servlet-name>
-        <servlet-class>com.healthcaresystem.HelloServlet</servlet-class>
+        <servlet-name>AuthServlet</servlet-name>
+        <servlet-class>com.healthcaresystem.controller.AuthServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>helloServlet</servlet-name>
-        <url-pattern>/hello-servlet</url-pattern>
+        <servlet-name>AuthServlet</servlet-name>
+        <url-pattern>/auth/*</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -20,15 +20,6 @@
     <servlet-mapping>
         <servlet-name>ClinicServlet</servlet-name>
         <url-pattern>/clinic/*</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>AuthServlet</servlet-name>
-        <servlet-class>com.healthcaresystem.controller.AuthServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>AuthServlet</servlet-name>
-        <url-pattern>/auth/*</url-pattern>
     </servlet-mapping>
 
 </web-app>
