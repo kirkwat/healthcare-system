@@ -1,29 +1,22 @@
 import React from "react";
-import logo from "./logo.svg";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Layout from "./Layout";
+import LoginPage from "./pages/login";
+import DashboardPage from "./pages/dashboard";
 
-function App() {
+const App = () => {
+  const isAuthenticated = false; // This will be dynamic based on actual authentication logic
+
   return (
-    <div className="text-center">
-      <header className="bg-gray-800 min-h-screen flex flex-col items-center justify-center text-white">
-        <img
-          src={logo}
-          className="h-40 animate-spin-slow pointer-events-none"
-          alt="logo"
-        />
-        <p className="text-base">
-          Edit <code className="text-lg">src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="text-blue-300"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Layout isAuthenticated={isAuthenticated}>
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+        </Routes>
+      </Layout>
+    </Router>
   );
-}
+};
 
 export default App;
