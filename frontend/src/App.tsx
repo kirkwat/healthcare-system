@@ -1,21 +1,24 @@
-import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Layout from "./Layout";
+import Layout from "./layouts";
 import LoginPage from "./pages/login";
 import DashboardPage from "./pages/dashboard";
+import { AuthProvider } from "./context/AuthProvider";
+import { RequireAuth } from "./routes/RequireAuth";
 
 const App = () => {
-  const isAuthenticated = false; // This will be dynamic based on actual authentication logic
-
   return (
-    <Router>
-      <Layout isAuthenticated={isAuthenticated}>
-        <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
-        </Routes>
-      </Layout>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route element={<RequireAuth />}>
+              <Route path="/dashboard" element={<DashboardPage />} />
+            </Route>
+          </Routes>
+        </Layout>
+      </Router>
+    </AuthProvider>
   );
 };
 

@@ -1,30 +1,69 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [code, setCode] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [name, setName] = useState("");
+  const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { user, login } = useAuth();
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [user, navigate]);
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
-    if (username === "testUsername" && password === "testPassword") {
-      setIsAuthenticated(true);
-    } else {
-      setError("Invalid username or password");
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/auth/login?username=${username}&password=${password}`,
+        {
+          method: "POST",
+        }
+      );
+      const data = await response.json();
+      if (response.ok) {
+        setName(data.name);
+        setIsAuthenticated(true);
+      } else {
+        setError(data);
+      }
+    } catch (error) {
+      setError("Failed to login.");
     }
   };
 
-  const handleCodeVerification = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleCodeVerification = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
-    if (code === "1111") {
-      navigate("/dashboard");
-    } else {
-      setError("Invalid code");
+    setError("");
+    try {
+      const response = await fetch(
+        `${
+          process.env.REACT_APP_API_URL
+        }/auth/mfa?username=${username}&code=${Number(code)}`,
+        {
+          method: "POST",
+        }
+      );
+      const data = await response.json();
+      if (response.ok) {
+        console.log(data);
+        login(data);
+        navigate("/dashboard");
+      } else {
+        setError(data);
+      }
+    } catch (error) {
+      setError("Failed to verify code.");
     }
   };
 
@@ -32,7 +71,7 @@ const LoginPage = () => {
     <div className="max-w-md w-full space-y-8 p-6 rounded shadow-lg bg-white">
       <div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Sign in to your account
+          {isAuthenticated ? `Welcome back ${name}` : "Sign in to your account"}
         </h2>
         {error && (
           <p className="text-red-600 text-sm text-center mt-2">{error}</p>
@@ -67,14 +106,14 @@ const LoginPage = () => {
             type="text"
             value={code}
             onChange={(e) => setCode(e.target.value)}
-            placeholder="Enter code"
+            placeholder="Enter MFA Code"
             className="appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-300 focus:border-blue-300 focus:z-10 sm:text-sm"
           />
           <button
             type="submit"
             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300"
           >
-            Verify Code
+            Verify MFA Code
           </button>
         </form>
       )}
