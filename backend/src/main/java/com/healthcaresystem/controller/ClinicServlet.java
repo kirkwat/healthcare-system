@@ -7,7 +7,6 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 @WebServlet(name = "ClinicServlet", value = "/clinic/*")
@@ -62,7 +61,7 @@ public class ClinicServlet extends HttpServlet {
         int patientId = Integer.parseInt(request.getParameter("patientId"));
         int testId = Integer.parseInt(request.getParameter("testId"));
         LabTest labTest = clinic.getLabTestById(userType, patientId, testId);
-        writeResponse(response, labTest);
+        ServletUtils.writeResponse(response, labTest);
     }
 
     private void handleGetLabTestsForPatient(String userType, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -70,39 +69,31 @@ public class ClinicServlet extends HttpServlet {
         String testType = request.getParameter("testType");
         String date = request.getParameter("date");
         ArrayList<LabTest> labTests = clinic.getLabTestsForPatient(userType, patientId, testType, date);
-        writeResponse(response, labTests);
+        ServletUtils.writeResponse(response, labTests);
     }
 
     private void handleGetVisitRecordById(String userType, HttpServletRequest request, HttpServletResponse response) throws IOException {
         int patientId = Integer.parseInt(request.getParameter("patientId"));
         int visitId = Integer.parseInt(request.getParameter("visitId"));
         VisitRecord visitRecord = clinic.getVisitRecordById(userType, patientId, visitId);
-        writeResponse(response, visitRecord);
+        ServletUtils.writeResponse(response, visitRecord);
     }
 
     private void handleGetVisitRecordsForPatient(String userType, HttpServletRequest request, HttpServletResponse response) throws IOException {
         int patientId = Integer.parseInt(request.getParameter("patientId"));
         ArrayList<VisitRecord> visitRecords = clinic.getVisitRecordsForPatient(userType, patientId);
-        writeResponse(response, visitRecords);
+        ServletUtils.writeResponse(response, visitRecords);
     }
 
     private void handleGetPhysiciansForPatient(String userType, HttpServletRequest request, HttpServletResponse response) throws IOException {
         int patientId = Integer.parseInt(request.getParameter("patientId"));
         ArrayList<Physician> physicians = clinic.getPhysiciansForPatient(userType, patientId);
-        writeResponse(response, physicians);
+        ServletUtils.writeResponse(response, physicians);
     }
 
     private void handleGetPatientsForPhysician(String userType, HttpServletRequest request, HttpServletResponse response) throws IOException {
         int physicianId = Integer.parseInt(request.getParameter("physicianId"));
         ArrayList<Patient> patients = clinic.getPatientsForPhysician(userType, physicianId);
-        writeResponse(response, patients);
-    }
-
-    private void writeResponse(HttpServletResponse response, Object object) throws IOException {
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        PrintWriter out = response.getWriter();
-        out.print(gson.toJson(object));
-        out.flush();
+        ServletUtils.writeResponse(response, patients);
     }
 }

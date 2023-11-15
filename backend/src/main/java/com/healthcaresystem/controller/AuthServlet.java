@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet(name = "AuthServlet", value = "/auth/*")
 public class AuthServlet extends HttpServlet {
@@ -44,7 +43,7 @@ public class AuthServlet extends HttpServlet {
 
         User user = clinic.login(username, password);
         if (user != null) {
-            writeResponse(response, new UserLoginResponse(user.getUsername(), user.getName()));
+            ServletUtils.writeResponse(response, new UserLoginResponse(user.getUsername(), user.getName()));
         } else {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().print(gson.toJson("Invalid username or password"));
@@ -57,7 +56,7 @@ public class AuthServlet extends HttpServlet {
         User user = clinic.mfa(username, code);
         if (user != null) {
             request.getSession().setAttribute("user", user);
-            writeResponse(response, user);
+            ServletUtils.writeResponse(response, user);
         } else {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().print(gson.toJson("Invalid MFA code"));
@@ -71,14 +70,6 @@ public class AuthServlet extends HttpServlet {
         }
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().println("Logged out successfully");
-    }
-
-    private void writeResponse(HttpServletResponse response, Object object) throws IOException {
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        PrintWriter out = response.getWriter();
-        out.print(gson.toJson(object));
-        out.flush();
     }
 
     private static class UserLoginResponse {
