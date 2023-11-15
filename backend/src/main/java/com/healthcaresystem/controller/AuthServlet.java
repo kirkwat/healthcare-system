@@ -37,6 +37,17 @@ public class AuthServlet extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String pathInfo = request.getPathInfo();
+
+        if (pathInfo.equals("/session")) {
+            handleCheckSession(request, response);
+        } else {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Unknown action");
+        }
+    }
+
     private void handleLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -61,6 +72,17 @@ public class AuthServlet extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().print(gson.toJson("Invalid MFA code"));
          }
+    }
+
+    private void handleCheckSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("user") != null) {
+            User user = (User) session.getAttribute("user");
+            ServletUtils.writeResponse(response, user);
+        } else {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().print(gson.toJson("No active session"));
+        }
     }
 
     private void handleLogout(HttpServletRequest request, HttpServletResponse response) throws IOException {

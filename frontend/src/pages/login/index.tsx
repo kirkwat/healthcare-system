@@ -26,6 +26,7 @@ const LoginPage = () => {
         `${process.env.REACT_APP_API_URL}/auth/login?username=${username}&password=${password}`,
         {
           method: "POST",
+          credentials: "include",
         }
       );
       const data = await response.json();
@@ -52,11 +53,11 @@ const LoginPage = () => {
         }/auth/mfa?username=${username}&code=${Number(code)}`,
         {
           method: "POST",
+          credentials: "include",
         }
       );
       const data = await response.json();
       if (response.ok) {
-        console.log(data);
         login(data);
         navigate("/dashboard");
       } else {

@@ -6,13 +6,7 @@ type LayoutProps = {
 };
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const { user, logout } = useAuth();
-
-  console.log("user", user);
-
-  const handleLogout = () => {
-    logout();
-  };
+  const { user, logout, isLoading } = useAuth();
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
@@ -22,7 +16,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <div className="flex items-center space-x-4">
             <span>Logged in as {user.name}</span>
             <button
-              onClick={handleLogout}
+              onClick={logout}
               className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded text-sm"
             >
               Sign Out
@@ -32,7 +26,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       </nav>
 
       <main className="flex-grow flex justify-center items-center">
-        {children}
+        {isLoading ? (
+          <div className="text-xl font-semibold">Loading...</div>
+        ) : (
+          children
+        )}
       </main>
 
       <footer className="bg-gray-200 text-center p-4 mt-8">
