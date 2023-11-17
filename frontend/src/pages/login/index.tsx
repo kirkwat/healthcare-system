@@ -14,13 +14,18 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (user) {
-      navigate("/dashboard");
+      if (user.type === "physician" || user.type === "nurse") {
+        navigate("/dashboard");
+      } else if (user.type === "receptionist") {
+        navigate("/patients");
+      }
     }
   }, [user, navigate]);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
+
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}/auth/login?username=${username}&password=${password}`,
