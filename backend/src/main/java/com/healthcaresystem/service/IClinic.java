@@ -12,6 +12,8 @@ public interface IClinic {
     public ArrayList<LabTest> getLabTestsForPatient(String userType, int patientId, String testType, String date);
 
     public VisitRecord getVisitRecordById(String userType, int patientId, int visitId);
+    public VisitRecord getVisitRecordByDate(String userType, int patientId, String date);
+
     public ArrayList<VisitRecord> getVisitRecordsForPatient(String userType, int patientId);
 
     public ArrayList<Physician> getPhysiciansForPatient(String userType, int patientId);

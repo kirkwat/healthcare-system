@@ -25,7 +25,7 @@ public class ClinicServlet extends HttpServlet {
             return;
         }
 
-        String userType = user.getType(); // Extract the user type from the session.
+        String userType = user.getType();
 
         String pathInfo = request.getPathInfo();
 
@@ -39,6 +39,9 @@ public class ClinicServlet extends HttpServlet {
                     break;
                 case "/getVisitRecordById":
                     handleGetVisitRecordById(userType, request, response);
+                    break;
+                case "/getVisitRecordByDate":
+                    handleGetVisitRecordByDate(userType, request, response);
                     break;
                 case "/getVisitRecordsForPatient":
                     handleGetVisitRecordsForPatient(userType, request, response);
@@ -76,6 +79,13 @@ public class ClinicServlet extends HttpServlet {
         int patientId = Integer.parseInt(request.getParameter("patientId"));
         int visitId = Integer.parseInt(request.getParameter("visitId"));
         VisitRecord visitRecord = clinic.getVisitRecordById(userType, patientId, visitId);
+        ServletUtils.writeResponse(response, visitRecord);
+    }
+
+    private void handleGetVisitRecordByDate(String userType, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int patientId = Integer.parseInt(request.getParameter("patientId"));
+        String date = request.getParameter("date");
+        VisitRecord visitRecord = clinic.getVisitRecordByDate(userType, patientId, date);
         ServletUtils.writeResponse(response, visitRecord);
     }
 

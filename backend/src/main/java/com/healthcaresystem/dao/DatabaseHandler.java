@@ -195,6 +195,42 @@ public class DatabaseHandler implements IDatabaseHandler {
         return visitRecord;
     }
 
+    public VisitRecord getVisitRecordByDate(int patientId, String date){
+        VisitRecord visitRecord = null;
+
+        StringBuilder query = new StringBuilder("SELECT v.*, p.name AS patient_name, u.name AS physician_name " +
+                "FROM VisitRecord v " +
+                "INNER JOIN Patient p On v.patient_id = p.patient_id " +
+                "INNER JOIN User u ON v.physician_id = u.uid " +
+                "WHERE v.patient_id = ? AND v.date = ? " +
+                "LIMIT 1");
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(query.toString());
+            pstmt.setInt(1,  patientId);
+            pstmt.setString(2, date);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int rsVisitId = rs.getInt("visit_id");
+                int rsPatientId = rs.getInt("patient_id");
+                String rsPatientName = rs.getString("patient_name");
+                int rsPhysicianId = rs.getInt("physician_id");
+                String rsPhysicianName = rs.getString("physician_name");
+                String rsDate = rs.getString("date");
+                String rsTime = rs.getString("time");
+                String rsLocation = rs.getString("location");
+                String rsNotes = rs.getString("notes");
+                visitRecord = new VisitRecord(rsVisitId, rsPatientId, rsPatientName, rsPhysicianId, rsPhysicianName, rsDate, rsTime, rsLocation, rsNotes);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return visitRecord;
+    }
+
     public ArrayList<VisitRecord> getVisitRecordsForPatient(int patientId){
         ArrayList<VisitRecord> visitRecords = new ArrayList<>();
 

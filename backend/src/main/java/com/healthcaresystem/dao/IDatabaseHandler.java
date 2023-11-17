@@ -14,6 +14,8 @@ public interface IDatabaseHandler {
     public LabTest getLabTestById(int patientId, int testId);
     public ArrayList<LabTest> getLabTestsForPatient(int patientId, String testType, String date);
     public VisitRecord getVisitRecordById(int patientId, int visitId);
+    public VisitRecord getVisitRecordByDate(int patientId, String date);
+
     public ArrayList<VisitRecord> getVisitRecordsForPatient(int patientId);
     public ArrayList<Physician> getPhysiciansForPatient(int patientId);
     public ArrayList<Patient> getPatientsForPhysician(int physicianId);

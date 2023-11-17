@@ -37,6 +37,13 @@ public class Clinic implements IClinic {
         return dbHandler.getVisitRecordById(patientId, visitId);
     }
 
+    public VisitRecord getVisitRecordByDate(String userType, int patientId, String date){
+        if (!isPhysicianOrNurse(userType)) {
+            throw new SecurityException("Unauthorized access.");
+        }
+        return dbHandler.getVisitRecordByDate(patientId, date);
+    }
+
     public ArrayList<VisitRecord> getVisitRecordsForPatient(String userType, int patientId){
         if (!isPhysicianOrNurse(userType)) {
             throw new SecurityException("Unauthorized access.");
