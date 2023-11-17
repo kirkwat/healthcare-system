@@ -25,13 +25,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         )}
       </nav>
 
-      <main className="flex-grow flex justify-center items-center">
-        {isLoading ? (
-          <div className="text-xl font-semibold">Loading...</div>
-        ) : (
-          children
-        )}
-      </main>
+      {isLoading ? (
+        <div className="text-xl font-semibold">Loading...</div>
+      ) : (
+        children
+      )}
 
       <footer className="bg-gray-200 text-center p-4 mt-8">
         © 2023 Your Website
