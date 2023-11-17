@@ -24,3 +24,16 @@ export interface VisitRecord {
   location: string;
   notes: string;
 }
+
+export interface Physician {
+  patientIds: number[];
+  uid: number;
+  username: string;
+  name: string;
+  type: string;
+}
+
+export interface Patient {
+  patientId: number;
+  name: string;
+}

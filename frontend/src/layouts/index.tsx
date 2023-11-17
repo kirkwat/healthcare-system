@@ -11,7 +11,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       <nav className="bg-gray-800 text-white p-4 flex justify-between items-center">
-        <div className="font-bold text-xl">Your Logo</div>
+        <div className="font-bold text-xl">Healthcare System</div>
         {user && (
           <div className="flex items-center space-x-4">
             <span>Logged in as {user.name}</span>
@@ -32,7 +32,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       )}
 
       <footer className="bg-gray-200 text-center p-4 mt-8">
-        © 2023 Your Website
+        © 2023 Healthcare System
       </footer>
     </div>
   );

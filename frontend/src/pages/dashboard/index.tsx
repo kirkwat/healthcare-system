@@ -1,6 +1,6 @@
 import { useState } from "react";
-import VisitRecordCard from "./VisitRecordCard";
-import LabTestTable from "./LabTestTable";
+import VisitRecordCard from "./components/VisitRecordCard";
+import LabTestTable from "./components/LabTestTable";
 
 const DashboardPage = () => {
   const [queryType, setQueryType] = useState("");

@@ -1,4 +1,4 @@
-import { VisitRecord } from "../../types";
+import { VisitRecord } from "../../../types";
 
 const VisitRecordCard = ({ record }: { record: VisitRecord }) => {
   return (

@@ -1,4 +1,4 @@
-import { LabTest } from "../../types";
+import { LabTest } from "../../../types";
 
 const LabTestTable = ({ labTests }: { labTests: LabTest[] }) => {
   return (
